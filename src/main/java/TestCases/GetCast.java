@@ -1,36 +1,23 @@
-package SeeAllCast;
+package TestCases;
 
 import FileReadAndWrite.ReadFileData;
 import OpenBrowser.GetBrowser;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.List;
-import java.util.regex.Pattern;
-import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 import static org.testng.Assert.*;
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
-import java.util.concurrent.TimeUnit;
 
 public class GetCast {
 
     private WebDriver driver;
-    private String baseUrl;
     private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
     @BeforeClass(alwaysRun = true)
     public void setUp() throws Exception {
-        //driver = new ChromeDriver();
-
-       // driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver= GetBrowser.getChromeDriver();
-       // baseUrl = "https://www.blazedemo.com/";
     }
 
     @Test
@@ -38,15 +25,11 @@ public class GetCast {
         // Label: Test
         // ERROR: Caught exception [ERROR: Unsupported command [resizeWindow | 1603,760 | ]]
         ReadFileData cell=new ReadFileData ();
-        driver.get(baseUrl + "chrome://newtab/");
+        driver.get("chrome://newtab/");
         driver.get(cell.ReadFile (1,1,0));
         driver.findElement(By.name("q")).clear();
         driver.findElement(By.name("q")).sendKeys(cell.ReadFile (2,1,0));
         driver.findElement(By.name("q")).sendKeys (Keys.ENTER);
-       // String selectLinkOpeninNewTab = Keys.chord(Keys.CONTROL,Keys.RETURN);
-        //String s= "//span[text()='"+(cell.ReadFile (3,1,0))+"']";
-        //driver.wait();
-        //driver.findElement(By.xpath(s)).sendKeys (selectLinkOpeninNewTab);
         driver.get("https://www.imdb.com/title/tt8398600/");
         driver.findElement(By.linkText("See full cast")).click();
 
