@@ -1,30 +1,27 @@
 package TestCases;
 
-import FileReadAndWrite.ReadFileData;
+import FileReadAndWrite.ReadWriteFileData;
 import OpenBrowser.GetBrowser;
 import org.openqa.selenium.*;
-
 import java.util.List;
-
 import org.testng.annotations.*;
 import static org.testng.Assert.*;
 
 public class GetCast {
 
     private WebDriver driver;
-    private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
     @BeforeClass(alwaysRun = true)
-    public void setUp() throws Exception {
+    public void setUp()  {
         driver= GetBrowser.getChromeDriver();
     }
 
     @Test
     public void test() throws Exception {
-        // Label: Test
-        // ERROR: Caught exception [ERROR: Unsupported command [resizeWindow | 1603,760 | ]]
-        ReadFileData cell=new ReadFileData ();
+       // Following lines of code will open the see all cast page from where the cast is to be fetched. :)
+
+        ReadWriteFileData cell=new ReadWriteFileData ();
         driver.get("chrome://newtab/");
         driver.get(cell.ReadFile (1,1,0));
         driver.findElement(By.name("q")).clear();
@@ -36,9 +33,12 @@ public class GetCast {
         //Following is the for loop over the cast table to print the cast in excel sheet
         WebElement table = driver.findElement (By.xpath ("//table[@class='cast_list']"));
         List<WebElement> rows = table.findElements(By.tagName ("tr"));
-       // int rowCount = rows.size();
+       // rowCount is calculated and saved as integer rowCount
         int rowCount = 134;
 
+        //After the row 114 the xpath changes so the condition for if is applied
+        //for row 80 and 86 the xpath is different, so that condition is applied as well.
+        // tried to generalized it but it CANNOT BE GENERALIZED :/
         
         for (int i = 2, j = 1; i< rowCount && j<rowCount; i=i+2,j++) {
             String castName;
@@ -57,6 +57,8 @@ public class GetCast {
             {
                 castName = driver.findElement (By.xpath ("//*[@id=\"fullcredits_content\"]/table[3]/tbody/tr[" + (i+1) + "]/td[2]/a")).getText ();
                 cell.WriteFile (castName, j, 0, 3);
+
+                //Saving the text in string and spliting it up for screen name and appearence.
                 String value= driver.findElement (By.xpath ("//*[@id=\"fullcredits_content\"]/table[3]/tbody/tr["+(i+1)+"]/td[4]")).getText ();
                 String[] part= value.split("1",2);
                 screenName= part[0];
@@ -69,6 +71,7 @@ public class GetCast {
             {
                 castName = driver.findElement (By.xpath ("//*[@id=\"fullcredits_content\"]/table[3]/tbody/tr[" + i + "]/td[2]/a")).getText ();
                 cell.WriteFile (castName, j, 0, 3);
+                //Saving the text in string and spliting it up for screen name and appearence.
                 String value= driver.findElement (By.xpath ("//*[@id=\"fullcredits_content\"]/table[3]/tbody/tr["+i+"]/td[4]")).getText ();
                 String[] part= value.split("1",2);
                 screenName= part[0];
@@ -99,27 +102,5 @@ public class GetCast {
         }
     }
 
-    private boolean isAlertPresent() {
-        try {
-            driver.switchTo().alert();
-            return true;
-        } catch (NoAlertPresentException e) {
-            return false;
-        }
-    }
 
-    private String closeAlertAndGetItsText() {
-        try {
-            Alert alert = driver.switchTo().alert();
-            String alertText = alert.getText();
-            if (acceptNextAlert) {
-                alert.accept();
-            } else {
-                alert.dismiss();
-            }
-            return alertText;
-        } finally {
-            acceptNextAlert = true;
-        }
-    }
 }

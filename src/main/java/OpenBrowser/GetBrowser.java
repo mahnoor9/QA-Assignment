@@ -28,66 +28,22 @@ public class GetBrowser {
         if (!IS_OS_WINDOWS && !IS_OS_LINUX && !IS_OS_MAC) {
             throw new RuntimeException("Could not initialize browser due to unknown operating system!");
         }
-        if (IS_OS_WINDOWS) {
-            setProperty("webdriver.chrome.driver", "C:\\new folder 1\\chromedriver.exe");
-        }
-        if (IS_OS_LINUX) {
-            setProperty("webdriver.chrome.driver", "src/test/resources/browserBinaries/chromedriver");
-        }
-        if (IS_OS_MAC) {
-            setProperty("webdriver.chrome.driver", "src/test/resources/browserBinaries/chromedriverMac");
-        }
+            setProperty("webdriver.chrome.driver", "C:\\Users\\dell\\IdeaProjects\\QAAssignment\\src\\main\\resources\\chromedriver1.exe");
+
 
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
         return driver;
     }
 
-    public WebDriver getFirefoxDriver() {
-        if (!IS_OS_WINDOWS && !IS_OS_LINUX && !IS_OS_MAC) {
-            throw new RuntimeException("Could not initialize browser due to unknown operating system!");
-        }
-        if (IS_OS_WINDOWS) {
-            setProperty("webdriver.gecko.driver", "src/test/resources/browserBinaries/geckodriver.exe");
-        }
-        if (IS_OS_LINUX) {
-            setProperty("webdriver.gecko.driver", "src/test/resources/browserBinaries/geckodriver");
-        }
-        if (IS_OS_MAC) {
-            setProperty("webdriver.gecko.driver", "src/test/resources/browserBinaries/geckodriverMac");
-        }
 
-        WebDriver driver = new FirefoxDriver();
-        driver.manage().window().maximize();
-        return driver;
-    }
-
-    public WebDriver getDriver() {
-        switch (System.getProperty("browser").toLowerCase()) {
-            case "chrome" :
-                System.out.println("Chrome was chosen!");
-                return getChromeDriver();
-            case "firefox" :
-                System.out.println("Firefox was chosen!");
-                return getFirefoxDriver();
-            default:
-                throw new RuntimeException("Unsupported browser! Will not start any browser!");
-        }
-    }
 
     public WebDriver getChromeDriverCustomSize(int width, int height) {
         if (!IS_OS_WINDOWS && !IS_OS_LINUX && !IS_OS_MAC) {
             throw new RuntimeException("Could not initialize browser due to unknown operating system!");
         }
-        if (IS_OS_WINDOWS) {
-            setProperty("webdriver.chrome.driver", "C:\\new folder 1\\chromedriver.exe");
-        }
-        if (IS_OS_LINUX) {
-            setProperty("webdriver.chrome.driver", "src/test/resources/browserBinaries/chromedriver");
-        }
-        if (IS_OS_MAC) {
-            setProperty("webdriver.chrome.driver", "C:\\new folder 1\\chromedriver.exe");
-        }
+            setProperty("webdriver.chrome.driver", "C:\\Users\\dell\\IdeaProjects\\QAAssignment\\src\\main\\resources\\chromedriver1.exe");
+
 
         WebDriver driver = new ChromeDriver();
         driver.manage().window().setSize(new Dimension(width, height));
