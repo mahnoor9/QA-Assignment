@@ -9,18 +9,17 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import java.io.File;
 import java.io.IOException;
-import static FileReadAndWrite.ReadFileData.ReadFile;
+import static FileReadAndWrite.ReadWriteFileData.ReadFile;
 import static org.testng.Assert.fail;
 
 
 
 public class PostFlyer {
     public WebDriver driver;
-    private boolean acceptNextAlert = true;
     private StringBuffer verificationErrors = new StringBuffer();
 
     @BeforeClass(alwaysRun = true)
-    public void setUp() throws Exception {
+    public void setUp()  {
         driver= GetBrowser.getChromeDriver();
 
     }
@@ -33,37 +32,31 @@ public class PostFlyer {
         // ERROR: Caught exception [ERROR: Unsupported command [resizeWindow | 1603,792 | ]]
         driver.get("https://emumba-test.herokuapp.com/");
         addWait.wait (driver);
+        //if you want to uncomment the signup method plz go to the sheet and update the email there. :)
         //  signUp (driver);
         signIn (driver);
+        AddPostFlyer (driver,addWait);
+        Screenshot ();
 
+    }
+
+    public static void AddPostFlyer(WebDriver driver, WaitBrowser addWait) throws IOException {
         addWait.wait(driver).until(ExpectedConditions.visibilityOfElementLocated (By.xpath ("//*[@id=\"root\"]/div/header/div/div/nav/button[2]"))).click();
 
         addWait.wait(driver);
         String Title= driver.findElement (By.xpath("//*[@id=\"root\"]/div/div/div/div/div[2]/div/div/h6")).getText ();
-        String detailLine1= driver.findElement (By.xpath("//*[@id=\"root\"]/div/div/div/div/div[2]/div/div/ul/li[1]/div/span")).getText ();
-        String detailLine2= driver.findElement (By.xpath("//*[@id=\"root\"]/div/div/div/div/div[2]/div/div/ul/li[2]/div/span")).getText ();
-        String detailLine3= driver.findElement (By.xpath("//*[@id=\"root\"]/div/div/div/div/div[2]/div/div/ul/li[3]/div/span")).getText ();
-        String detailLine4= driver.findElement (By.xpath("//*[@id=\"root\"]/div/div/div/div/div[2]/div/div/ul/li[4]/div/span")).getText ();
-        String detailLine5= driver.findElement (By.xpath("//*[@id=\"root\"]/div/div/div/div/div[2]/div/div/ul/li[5]/div/span")).getText ();
-
-        System.out.println (Title + detailLine1 +detailLine2);
-       // driver.findElement(By.cssSelector("h6.MuiTypography-root.jss832.MuiTypography-h6")).click();
-      //  driver.findElement(By.cssSelector("div.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-fullWidth.MuiInputBase-formControl.MuiInputBase-multiline.MuiOutlinedInput-multiline.MuiInputBase-adornedEnd.MuiOutlinedInput-adornedEnd")).click();
-      //  driver.findElement(By.cssSelector("h6.MuiTypography-root.jss832.MuiTypography-h6")).click();
-        // ERROR: Caught exception [ERROR: Unsupported command [contextMenuAt | css=h6.MuiTypography-root.jss832.MuiTypography-h6 | 29,21]]
         driver.findElement(By.name("title")).click();
         driver.findElement(By.name("title")).clear();
         driver.findElement(By.name("title")).sendKeys(Title);
-      //  driver.findElement(By.cssSelector("ul.MuiList-root.MuiList-dense.MuiList-padding")).click();
-        // ERROR: Caught exception [ERROR: Unsupported command [contextMenuAt | css=span.MuiTypography-root.MuiListItemText-primary.MuiTypography-body2.MuiTypography-displayBlock | 16,7]]
-        // ERROR: Caught exception [ERROR: Unsupported command [contextMenuAt | name=details | 220,42]]
         driver.findElement(By.name("details")).click();
         driver.findElement(By.name("details")).clear();
+        //following loop will read the text for the details field.
         for(int line=1;line<=5;line++) {
             String detailLine= driver.findElement (By.xpath("//*[@id=\"root\"]/div/div/div/div/div[2]/div/div/ul/li["+line+"]/div/span")).getText();
             driver.findElement (By.name ("details")).sendKeys (detailLine);
             driver.findElement (By.name("details")).sendKeys (Keys.ENTER);
         }
+        //following statements will add phone and address to the form.
         driver.findElement(By.name("phone")).click();
         driver.findElement(By.name("phone")).clear();
         driver.findElement(By.name("phone")).sendKeys(ReadFile(7,1,0));
@@ -71,7 +64,9 @@ public class PostFlyer {
         driver.findElement(By.name("address")).clear();
         driver.findElement(By.name("address")).sendKeys(ReadFile(8,1,0));
 
-       // driver.findElement(By.xpath("//*[@id=\"root\"]/div/div/div/div/div[1]/div/div/form/div[4]/div/div")).clear();
+        //following piece of code will add the tags from the sheet to the form, lets not uncomment it
+        // because there is a little error that is being fixed.
+        // driver.findElement(By.xpath("//*[@id=\"root\"]/div/div/div/div/div[1]/div/div/form/div[4]/div/div")).clear();
        /* String xpath_tag="//*[@id=\"root\"]/div/div/div/div/div[1]/div/div/form/div[4]/div";
         for(int tagNumber=9;tagNumber<12;tagNumber++)
         {
@@ -92,7 +87,6 @@ public class PostFlyer {
         driver.findElement(By.xpath("//div[@id='root']/div/header/div/div/nav/button[3]/span")).click();
         driver.findElement (By.xpath ("//*[@id=\"root\"]/div/header/div/div/nav/button[1]")).click ();
         addWait.wait (driver).until (ExpectedConditions.visibilityOfElementLocated (By.xpath ("//*[@id=\"root\"]/div/header/div/div/h6")));
-
 
     }
 
@@ -129,7 +123,7 @@ public class PostFlyer {
         System.out.println ("hey");
     }
 
-    public  void Screenshot(String name)
+    public  void Screenshot()
     {
         //Convert web driver object to TakeScreenshot
 
@@ -140,6 +134,7 @@ public class PostFlyer {
         File screenshot=scrShot.getScreenshotAs(OutputType.FILE);
 
         //Move image file to new destination
+
         System.out.println ("Screenshot is saved at this location:" +  screenshot.getAbsolutePath ());
     }
 
@@ -161,28 +156,5 @@ public class PostFlyer {
         }
     }
 
-    private boolean isAlertPresent() {
-        try {
-            driver.switchTo().alert();
-            return true;
-        } catch (NoAlertPresentException e) {
-            return false;
-        }
-    }
-
-    private String closeAlertAndGetItsText() {
-        try {
-            Alert alert = driver.switchTo().alert();
-            String alertText = alert.getText();
-            if (acceptNextAlert) {
-                alert.accept();
-            } else {
-                alert.dismiss();
-            }
-            return alertText;
-        } finally {
-            acceptNextAlert = true;
-        }
-    }
 }
 
