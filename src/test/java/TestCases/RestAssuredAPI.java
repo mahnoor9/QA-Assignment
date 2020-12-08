@@ -1,5 +1,6 @@
 package TestCases;
 
+import constants.Constants;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 //import org.graalvm.compiler.debug.Assertions;
@@ -11,7 +12,7 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import static FileReadAndWrite.ReadWriteFileData.ReadFile;
+import static utils.ReadWriteFileData.ReadFile;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -37,7 +38,7 @@ public class RestAssuredAPI {
                 .get()
                 // Then
                 .then()
-                .statusCode(201);
+                .statusCode(308);
 
 
     }
@@ -47,21 +48,21 @@ public class RestAssuredAPI {
         Response loginResponse=
                 RestAssured
                         .given ()
-                        .baseUri(ReadFile( 4,0,1))
+                        .baseUri(Constants.postLoginURL)
                         .contentType("application/json")
-                        .body(ReadFile( 4,2,1))
+                        .body(Constants.postLoginPayload)
                         .when ()
                         .post ();
 
-                loginResponse.then().assertThat ().statusCode(Integer.parseInt(ReadFile (4,4,1)));
+                loginResponse.then().assertThat ().statusCode(Integer.parseInt(Constants.postLoginTime));
         //following assertion will validate the schema for the login request
                 assertThat(loginResponse.body ().asString (), matchesJsonSchemaInClasspath("postLogin.json"));
 
-        //following piece of code will test the response time and response size in kbs.
-        //the content read from the file are in data type String, we need to convert them to Long to
-       // use them in time() funtion.
-                 Long expectedTime= Long.parseLong (ReadFile (4,5,1));
-                 int expectedContentLength= Integer.parseInt (ReadFile (4,5,1))*1000;
+        /*following piece of code will test the response time and response size in kbs.
+        the content read from the file are in data type String, we need to convert them to Long to
+        use them in time() funtion. */
+                 Long expectedTime= Long.parseLong (Constants.postLoginSize);
+                 int expectedContentLength= Integer.parseInt (Constants.postLoginSize)*1000;
                  loginResponse.then().assertThat ().time(Matchers.lessThanOrEqualTo (expectedTime), TimeUnit.SECONDS);
                  loginResponse.then ().header ("Content-Length", Integer::parseInt, lessThanOrEqualTo(expectedContentLength));
 
@@ -72,20 +73,20 @@ public class RestAssuredAPI {
         Response loginResponse=
                 RestAssured
                         .given ()
-                        .baseUri(ReadFile( 3,0,1))
+                        .baseUri(Constants.postSignUpURL)
                         .contentType("application/json")
-                        .body(ReadFile( 3,2,1))
+                        .body(Constants.postSignUpPayload)
                         .when ()
                         .post ();
         //following piece of code will verify the status code for login post request.
-        loginResponse.then().assertThat ().statusCode(Integer.parseInt(ReadFile (4,4,1)));
+        loginResponse.then().assertThat ().statusCode(Integer.parseInt(Constants.postSignUpTime));
         //following assertion will validate the schema for the login request
         assertThat(loginResponse.body ().asString (), matchesJsonSchemaInClasspath("postSignUp.json"));
-        //following piece of code will test the response time and response size in kbs.
-        //the content read from the file are in data type String, we need to convert them to Long to
-        // use them in time() funtion.
-        Long expectedTime= Long.parseLong (ReadFile (3,5,1));
-        int expectedContentLength= Integer.parseInt (ReadFile (3,5,1))*1000;
+         /*following piece of code will test the response time and response size in kbs.
+        the content read from the file are in data type String, we need to convert them to Long to
+        use them in time() funtion. */
+        Long expectedTime= Long.parseLong (Constants.postSignUpSize);
+        int expectedContentLength= Integer.parseInt (Constants.postSignUpSize)*1000;
         loginResponse.then().assertThat ().time(Matchers.lessThanOrEqualTo (expectedTime), TimeUnit.SECONDS);
         loginResponse.then ().header ("Content-Length", Integer::parseInt, lessThanOrEqualTo(expectedContentLength));
 

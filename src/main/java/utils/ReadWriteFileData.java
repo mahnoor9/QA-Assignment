@@ -1,16 +1,21 @@
-package FileReadAndWrite;
+package utils;
 
 import java.io.*;
+
+import constants.Constants;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 public class ReadWriteFileData {
+    public static void main(String[] args) throws IOException {
+     System.out.println (ReadFile (4,0,1));
+    }
       //following function takes three arguments, rowNumber,cellNumber,SheetNumber and return the data of that entity in the sheet as a String
     public static String ReadFile (int rowNumber, int cellNumber, int sheetNumber) throws IOException {
         String val1=" ";
-        File file = new File ("C:\\Users\\dell\\IdeaProjects\\QAAssignment\\src\\main\\java\\TestData\\qaautomation (1).xlsx");
+        File file = new File ("src/test/resources/qaautomation (1).xlsx");
         FileInputStream fs = new FileInputStream (file);
       //Creating a workbook
         XSSFWorkbook workbook = new XSSFWorkbook (fs);
@@ -20,7 +25,8 @@ public class ReadWriteFileData {
        //i separated the numeric and string cells, but then again returned them as string
         //seems like redundant work BUT WITHOUT IT THE CODE DOESN'T WORK
         // SO DONT YOU DARE TOUCH IT!!!!
-       if(type == CellType.STRING) {
+       if(type == CellType.STRING)
+       {
            val1 = sheet.getRow (rowNumber).getCell (cellNumber).getStringCellValue ();
            workbook.close();
        }
@@ -36,7 +42,7 @@ public class ReadWriteFileData {
 
 
     public static void WriteFile (String value, int rowNumber, int cellNumber, int sheetNumber) throws IOException {
-        File file = new File ("C:\\Users\\dell\\IdeaProjects\\QAAssignment\\src\\main\\java\\TestData\\qaautomation (1).xlsx");
+        File file = new File ("src/test/resources/qaautomation (1).xlsx");
         FileInputStream fs = new FileInputStream (file);
         //Creating a workbook
         XSSFWorkbook workbook = new XSSFWorkbook (fs);

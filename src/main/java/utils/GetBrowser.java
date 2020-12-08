@@ -1,4 +1,4 @@
-package OpenBrowser;
+package utils;
 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
@@ -18,7 +18,7 @@ public class GetBrowser {
      */
 
     public WebDriver getWinChromeDriver() {
-        setProperty("webdriver.chrome.driver", "C:\\new folder 1\\chromedriver.exe");
+        setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver1.exe");
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
         return driver;
@@ -28,7 +28,7 @@ public class GetBrowser {
         if (!IS_OS_WINDOWS && !IS_OS_LINUX && !IS_OS_MAC) {
             throw new RuntimeException("Could not initialize browser due to unknown operating system!");
         }
-            setProperty("webdriver.chrome.driver", "C:\\Users\\dell\\IdeaProjects\\QAAssignment\\src\\main\\resources\\chromedriver1.exe");
+            setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver1.exe");
 
 
         WebDriver driver = new ChromeDriver();
@@ -42,7 +42,7 @@ public class GetBrowser {
         if (!IS_OS_WINDOWS && !IS_OS_LINUX && !IS_OS_MAC) {
             throw new RuntimeException("Could not initialize browser due to unknown operating system!");
         }
-            setProperty("webdriver.chrome.driver", "C:\\Users\\dell\\IdeaProjects\\QAAssignment\\src\\main\\resources\\chromedriver1.exe");
+            setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver1.exe");
 
 
         WebDriver driver = new ChromeDriver();
