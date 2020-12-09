@@ -19,12 +19,8 @@ public class ReadWriteFileData {
         FileInputStream fs = new FileInputStream (file);
       //Creating a workbook
         XSSFWorkbook workbook = new XSSFWorkbook (fs);
-        //XSSFSheet sheet = workbook.getSheetAt (sheetNumber);
         XSSFSheet sheet = workbook.getSheetAt(sheetNumber);
        CellType type = sheet.getRow (rowNumber).getCell (cellNumber).getCellType();
-       //i separated the numeric and string cells, but then again returned them as string
-        //seems like redundant work BUT WITHOUT IT THE CODE DOESN'T WORK
-        // SO DONT YOU DARE TOUCH IT!!!!
        if(type == CellType.STRING)
        {
            val1 = sheet.getRow (rowNumber).getCell (cellNumber).getStringCellValue ();
@@ -46,9 +42,6 @@ public class ReadWriteFileData {
         FileInputStream fs = new FileInputStream (file);
         //Creating a workbook
         XSSFWorkbook workbook = new XSSFWorkbook (fs);
-        //following if condition was so necessary that without it the whole thing was falling apart. it checks:
-        //if no cell already present for a row, new row will be created, otherwise the previous row iwll be used, in order
-        //to not waste the data already present :)
         if(cellNumber==0) {
             XSSFSheet sheet = workbook.getSheetAt (sheetNumber);
             Row newRow = sheet.createRow (rowNumber);

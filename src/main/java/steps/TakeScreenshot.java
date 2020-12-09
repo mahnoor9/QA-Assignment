@@ -7,7 +7,14 @@ import org.openqa.selenium.WebDriver;
 import java.io.File;
 
 public class TakeScreenshot {
-    public static void CaptureAndSave(WebDriver driver)
+
+    private WebDriver driver;
+
+    public TakeScreenshot(WebDriver driver){
+        this.driver = driver;
+    }
+
+    public void CaptureAndSave()
     {
         //Convert web driver object to TakeScreenshot
 

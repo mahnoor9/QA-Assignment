@@ -9,6 +9,6 @@ public class AddPostFlyer {
     public static By detailsField= By.name("details");
     public static By phoneField= By.name("phone");
     public static By addressField= By.name("address");
-    public static By submitButton= By.xpath("//div[@id='root']/div/header/div/div/nav/button[3]/span");
+    public static By submitButton= By.xpath("//span[text()='Post']");
 
 }

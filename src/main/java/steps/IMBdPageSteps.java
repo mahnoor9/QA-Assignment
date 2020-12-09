@@ -10,12 +10,19 @@ import java.io.IOException;
 import java.util.List;
 
 public class IMBdPageSteps {
-    public static void openSeeAllCast(WebDriver driver)
+
+    private WebDriver driver;
+
+    public IMBdPageSteps(WebDriver driver){
+        this.driver = driver;
+    }
+
+    public void openSeeAllCast()
     {
         driver.get(Constants.IMBdLink);
         driver.findElement(GetCastIMBdPage.seeFullCastButton).click();
     }
-    public static void writeCast(WebDriver driver) throws IOException {
+    public void writeCast() throws IOException {
         ReadWriteFileData cell=new ReadWriteFileData ();
 
         //Following is the for loop over the cast table to print the cast in excel sheet

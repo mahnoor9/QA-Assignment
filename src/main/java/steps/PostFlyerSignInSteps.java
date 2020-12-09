@@ -11,19 +11,25 @@ import java.io.IOException;
 import static components.PostFlyerSignIn.*;
 
 public class PostFlyerSignInSteps {
-    public static void enterCredentials(WebDriver driver) throws IOException {
+    private WebDriver driver;
+
+    public PostFlyerSignInSteps(WebDriver driver){
+        this.driver = driver;
+    }
+
+    public void enterCredentials(String email,String password) throws IOException {
         WaitBrowser addWait= new WaitBrowser ();
         addWait.wait(driver).until(ExpectedConditions.elementToBeClickable(emailField)).click();
-        addWait.wait(driver).until(ExpectedConditions.elementToBeClickable(emailField)).sendKeys(Constants.email);
+        addWait.wait(driver).until(ExpectedConditions.elementToBeClickable(emailField)).sendKeys(email);
         driver.findElement(components.PostFlyerSignIn.passwordField).click();
         driver.findElement(components.PostFlyerSignIn.passwordField).clear();
-        driver.findElement(components.PostFlyerSignIn.passwordField).sendKeys(Constants.password);}
-        public static void clickLogin(WebDriver driver)
+        driver.findElement(components.PostFlyerSignIn.passwordField).sendKeys(password);}
+        public  void clickLogin()
         {
             WaitBrowser addWait= new WaitBrowser ();
         addWait.wait(driver).until(ExpectedConditions.elementToBeClickable(loginButton)).click();
     }
-    public static void openLogin(WebDriver driver)
+    public void openLogin()
     {
         driver.findElement(LoginPage).click();
     }
