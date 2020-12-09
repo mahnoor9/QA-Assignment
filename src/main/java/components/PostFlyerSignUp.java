@@ -9,6 +9,6 @@ public class PostFlyerSignUp {
     public static By emailField= By.name("email");
     public static By passwordField= By.name("password");
     public static By confirmPasswordField= By.name("confirm_password");
-    public static By signUpButton= By.xpath ("//*[@id=\"root\"]/div/div/div/div/div/form/div[5]/button/span[1]");
+    public static By signUpButton= By.xpath ("(button[text()='Sign Up'])");
 
 }
